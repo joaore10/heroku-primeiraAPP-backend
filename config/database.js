@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/db_finance'
+const mongoUrl = process.env.MONGO_URL
 module.exports = mongoose.connect( mongoUrl, { useNewUrlParser: true , useUnifiedTopology: true })
 
 mongoose.Error.messages.general.required = "O atributo '{PATH}' é obrigatorio"
