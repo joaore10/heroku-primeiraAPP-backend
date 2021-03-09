@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken')
 const env = require('../.env')
 
+const authSecret = process.env.AUTH_SECRET || env.authSecret
+
 module.exports = (req, res, next) => {
 
     //CORS preflight request
@@ -13,7 +15,7 @@ module.exports = (req, res, next) => {
             return res.status(403).send({ errors: ['Nenhum token incluso.'] })
         }
 
-        jwt.verify(token, env.authSecret, function(err, decoded){
+        jwt.verify(token, authSecret, function(err, decoded){
             if(err) {
                 return res.status(403).send({
                     errors: ['Falha na autenticação do Token.']

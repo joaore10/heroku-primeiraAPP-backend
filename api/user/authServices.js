@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('./user')
 const env = require('../../.env')
+const authSecret = process.env.AUTH_SECRET || env.authSecret
 
 const emailRegex = /\S+@\S+\.\S+/
 const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,12})/
@@ -21,7 +22,7 @@ const login = (req, res, next) => {
         if(err){
             return sendErrorsFromDB(res, err)
         }else if(user && bcrypt.compareSync(password, user.password)) {
-            const token = jwt.sign(user.toJSON(), env.authSecret, {
+            const token = jwt.sign(user.toJSON(), authSecret, {
                 expiresIn: "1 day"
             })
 
@@ -35,7 +36,7 @@ const login = (req, res, next) => {
 
 const validateToken = (req, res, next) => {
     const token = req.body.token || ''
-    jwt.verify(token, env.authSecret, function(err, decoded){
+    jwt.verify(token, authSecret, function(err, decoded){
         return res.status(200).send({valid: !err})
     })
 }
