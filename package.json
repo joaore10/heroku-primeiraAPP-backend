@@ -5,7 +5,7 @@
   "main": "loader.js",
   "scripts": {
     "dev": "nodemon",
-    "production": "start loader.js"
+    "production": "pm2 start loader.js --name backend"
   },
   "author": "João Vitor",
   "license": "ISC",
@@ -24,5 +24,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
+  },
+  "engines": {
+    "node": ">=6.11.1"
   }
 }
